@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Login</title></head>
+<body>
+<h2>Login</h2>
+<div th:if="${param.registrado}">
+    Registrado com sucesso!
+</div>
+<form th:action="@{/login}" method="post">
+    <input type="text" name="username" placeholder="Usuário" />
+    <input type="password" name="password" placeholder="Senha" />
+    <button type="submit">Entrar</button>
+</form>
+<a th:href="@{/register}">Registrar</a>
+</body>
+</html>
