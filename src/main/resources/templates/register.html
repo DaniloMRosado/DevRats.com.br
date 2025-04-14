@@ -1,19 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Registro</title></head>
+<head>
+  <title>Registro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .wrapper {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #764ba2;
+    }
+
+    button {
+      background: #764ba2;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #5d3b7a;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    a {
+      color: #764ba2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #5d3b7a;
+    }
+  </style>
+</head>
 <body>
-<h2>Registrar</h2>
+<div class="wrapper">
+  <h2>Criar Conta</h2>
 
-<form th:action="@{/register}" th:object="${usuario}" method="post">
-  <label for="username">Usuário:</label>
-  <input type="text" th:field="*{nomeUsuario}" id="username"  required />
+  <form th:action="@{/register}" th:object="${usuario}" method="post">
+    <input type="text" th:field="*{nomeUsuario}" id="username" placeholder="Usuário" required>
+    <input type="password" th:field="*{senha}" id="password" placeholder="Senha" required>
+    <button type="submit">Cadastrar</button>
+  </form>
 
-  <label for="password">Senha:</label>
-  <input type="password" th:field="*{senha}" id="password" required />
-
-  <button type="submit">Cadastrar</button>
-</form>
-
-<a th:href="@{/login}">Voltar ao login</a>
+  <div class="link">
+    <a th:href="@{/login}">Já tem conta? Faça login</a>
+  </div>
+</div>
 </body>
 </html>
