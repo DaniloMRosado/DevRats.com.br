@@ -23,6 +23,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register", "/css/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/alunos/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
