@@ -3,31 +3,30 @@
 <head>
     <title>Home - DevRats</title>
     <style>
+        /* Reset e estilos globais */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding-top: 2rem;
         }
-
         .system-title {
             color: white;
             font-size: 3rem;
             font-weight: bold;
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: -1px;
         }
 
+        /* Container principal */
         .wrapper {
             background: white;
             padding: 2rem;
@@ -35,113 +34,117 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 1200px;
-            margin: 1rem;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-
         h2 {
             color: #666;
-            margin: 0;
             font-size: 1.8rem;
         }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            color: white;
+        }
+        .btn-editar {
+            background-color: #764ba2;
+        }
+        .btn-inativar {
+            background-color: #c62828;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            background: white;
+        /* Layout em cards */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .card {
+            background-color: #f9f9f9;
             border-radius: 8px;
-            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        th {
+        .card-header {
             background-color: #764ba2;
             color: white;
-            font-weight: 600;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 1rem;
+        }
+        .card-header h3 {
+            font-size: 1.3rem;
+        }
+        .card-body {
+            padding: 1rem;
+        }
+        .card-body p {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: #444;
+        }
+        .card-body p strong {
+            display: inline-block;
+            width: 80px;
+        }
+        .card-footer {
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
         }
 
-        tr:hover {
-            background-color: #f8f8f8;
-        }
-
+        /* Estilos para badges de status */
         .status-badge {
-            padding: 4px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 500;
         }
-
         .ativo {
             background-color: #e8f5e9;
             color: #2e7d32;
         }
-
         .inativo {
             background-color: #ffebee;
             color: #c62828;
         }
-
         .pago {
             background-color: #e3f2fd;
             color: #1565c0;
         }
-
         .pendente {
             background-color: #fff3e0;
             color: #ef6c00;
         }
 
-        .actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-editar {
-            background-color: #764ba2;
-            color: white;
-        }
-
-        .btn-inativar {
-            background-color: #c62828;
-            color: white;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
+        /* Link de logout */
         .logout-link {
             color: white;
             text-decoration: none;
             margin-top: 1rem;
-            display: inline-block;
             padding: 8px 16px;
             border-radius: 4px;
             transition: background 0.3s ease;
+            background: rgba(0,0,0,0.2);
         }
-
         .logout-link:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -154,43 +157,38 @@
         <a th:href="@{/alunos/novo}" class="btn btn-editar">Adicionar Aluno</a>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Documento</th>
-            <th>Celular</th>
-            <th>Status</th>
-            <th>Pagamento</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="aluno : ${alunos}">
-            <td th:text="${aluno.nome}"></td>
-            <td th:text="${aluno.documento}"></td>
-            <td th:text="${aluno.numeroCelular} ?: 'Não informado'"></td>
-            <td>
+    <div class="grid-container">
+        <div class="card" th:each="aluno : ${alunos}">
+            <div class="card-header">
+                <h3 th:text="${aluno.nome}">Nome do Aluno</h3>
+            </div>
+            <div class="card-body">
+                <p>
+                    <strong>Doc:</strong>
+                    <span th:text="${aluno.documento}">CPF/RG</span>
+                </p>
+                <p>
+                    <strong>Cel:</strong>
+                    <span th:text="${aluno.numeroCelular} ?: 'Não informado'">Número</span>
+                </p>
+                <p>
+                    <strong>Status:</strong>
                     <span th:classappend="${aluno.ativo} ? 'status-badge ativo' : 'status-badge inativo'"
-                          th:text="${aluno.ativo} ? 'Ativo' : 'Inativo'">
-                    </span>
-            </td>
-            <td>
+                          th:text="${aluno.ativo} ? 'Ativo' : 'Inativo'">Status</span>
+                </p>
+                <p>
+                    <strong>Pag:</strong>
                     <span th:classappend="${aluno.pagamentoEmDia} ? 'status-badge pago' : 'status-badge pendente'"
-                          th:text="${aluno.pagamentoEmDia} ? 'Em dia' : 'Pendente'">
-                    </span>
-            </td>
-            <td>
-                <div class="actions">
-                    <button class="btn btn-editar">Editar</button>
-                    <button class="btn btn-inativar">
-                        <span th:text="${aluno.ativo} ? 'Inativar' : 'Reativar'"></span>
-                    </button>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                          th:text="${aluno.pagamentoEmDia} ? 'Em dia' : 'Pendente'">Pagamento</span>
+                </p>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-editar">Editar</button>
+                <button class="btn btn-inativar"
+                        th:text="${aluno.ativo} ? 'Inativar' : 'Reativar'">Ação</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <a class="logout-link" th:href="@{/logout}">Sair do sistema</a>
