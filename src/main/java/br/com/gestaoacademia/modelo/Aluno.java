@@ -34,4 +34,9 @@ public class Aluno {
     @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
 
+    @PrePersist
+    protected void onCreate() {
+        dataCadastro = LocalDateTime.now();
+    }
+
 }

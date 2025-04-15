@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Aluno - DevRats</title>
+    <style>
+        /* Mantendo o estilo consistente */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding-top: 2rem;
+        }
+
+        .system-title {
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .wrapper {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 1rem;
+        }
+
+        h2 {
+            color: #666;
+            text-align: center;
+            margin: 0 0 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #764ba2;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background: #764ba2;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background: #5d3b7a;
+        }
+
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="system-title">DevRats.com.br</div>
+
+<div class="wrapper">
+    <h2>Editar Aluno</h2>
+
+    <form th:action="@{/alunos}" th:object="${aluno}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{dataCadastro}" />
+
+        <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" th:field="*{nome}" placeholder="Nome do aluno" required maxlength="100">
+        </div>
+
+        <div class="form-group">
+            <label>Documento (CPF/RG)</label>
+            <input type="text" th:field="*{documento}" placeholder="Número do documento" required maxlength="20">
+        </div>
+
+        <div class="form-group">
+            <label>Número do Celular</label>
+            <input type="tel" th:field="*{numeroCelular}" placeholder="(00) 00000-0000" required maxlength="20">
+        </div>
+
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" th:field="*{ativo}" id="ativo">
+                <label for="ativo">Ativo no sistema</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" th:field="*{pagamentoEmDia}" id="pagamento">
+                <label for="pagamento">Pagamento em dia</label>
+            </div>
+        </div>
+        <button type="submit">Salvar Alterações</button>
+        <div class="form-group">
+            <label>Data de Cadastro</label>
+            <input type="text" th:value="${#temporals.format(aluno.dataCadastro, 'dd/MM/yyyy HH:mm')}" class="readonly-field" readonly>
+        </div>
+    </form>
+</div>
+
+<a class="logout-link" th:href="@{/alunos}">Voltar para lista</a>
+<a class="logout-link" th:href="@{/logout}">Sair do sistema</a>
+</body>
+</html>
